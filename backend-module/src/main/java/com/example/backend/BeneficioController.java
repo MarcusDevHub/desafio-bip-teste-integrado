@@ -3,6 +3,7 @@ package com.example.backend;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/beneficios")
@@ -27,12 +28,12 @@ public class BeneficioController {
     }
 
     @PostMapping
-    public Beneficio create(@RequestBody Beneficio beneficio) {
+    public Beneficio create(@Valid @RequestBody Beneficio beneficio) {
         return service.criar(beneficio);
     }
 
     @PutMapping("/{id}")
-    public Beneficio update(@PathVariable Long id, @RequestBody Beneficio beneficio) {
+    public Beneficio update(@PathVariable Long id, @Valid @RequestBody Beneficio beneficio) {
         return service.atualizar(id, beneficio);
     }
 

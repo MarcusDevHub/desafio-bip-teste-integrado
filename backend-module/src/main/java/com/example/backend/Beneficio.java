@@ -1,6 +1,10 @@
 package com.example.backend;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 
 @Entity
@@ -11,12 +15,16 @@ public class Beneficio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "O nome é obrigatório.")
     @Column(name = "NOME", nullable = false, length = 100)
     private String nome;
 
-    @Column(name = "DESCRICAO", length = 255)
+    @NotBlank(message = "A descrição é obrigatória.")
+    @Column(name = "DESCRICAO", nullable = false, length = 255)
     private String descricao;
 
+    @NotNull(message = "O valor é obrigatório.")
+    @DecimalMin(value = "0.00", inclusive = true, message = "O valor não pode ser negativo.")
     @Column(name = "VALOR", nullable = false, precision = 15, scale = 2)
     private BigDecimal valor;
 
