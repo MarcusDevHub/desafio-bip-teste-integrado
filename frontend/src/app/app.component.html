@@ -97,6 +97,7 @@
           <th>Descrição</th>
           <th>Valor</th>
           <th>Ativo</th>
+          <th>Ações</th>
         </tr>
       </thead>
       <tbody>
@@ -106,6 +107,11 @@
           <td>{{ beneficio.descricao }}</td>
           <td>{{ beneficio.valor }}</td>
           <td>{{ beneficio.ativo ? 'Sim' : 'Não' }}</td>
+          <td>
+            <button type="button" (click)="deletarBeneficio(beneficio.id)">
+              Excluir
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>

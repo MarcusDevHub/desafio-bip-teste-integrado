@@ -96,4 +96,26 @@ export class AppComponent implements OnInit {
     });
   }
 
+  deletarBeneficio(id: number): void {
+    this.erro = '';
+    this.mensagemSucesso = '';
+
+    const confirmar = window.confirm('Tem certeza que deseja excluir este benefício?');
+
+    if (!confirmar) {
+      return;
+    }
+
+    this.beneficioService.deletar(id).subscribe({
+      next: () => {
+        this.mensagemSucesso = 'Benefício excluído com sucesso.';
+        this.carregarBeneficios();
+      },
+      error: (err) => {
+        this.erro = err?.error?.message || 'Erro ao excluir benefício.';
+      }
+    });
+  }
+
+
 }

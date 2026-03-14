@@ -64,3 +64,14 @@ select {
     padding: 10px;
     font-size: 14px;
 }
+
+td button {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+}
+
+td button:hover {
+    opacity: 0.9;
+}

@@ -21,5 +21,9 @@ export class BeneficioService {
     transferir(request: TransferRequest) {
         return this.http.post<void>(`${this.apiUrl}/transfer`, request);
     }
+    deletar(id: number) {
+        return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    }
+
 
 }
