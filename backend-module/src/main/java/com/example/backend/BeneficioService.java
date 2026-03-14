@@ -20,7 +20,7 @@ public class BeneficioService {
 
     public Beneficio buscarPorId(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Benefício não encontrado."));
+                .orElseThrow(() -> new ResourceNotFoundException("Benefício não encontrado."));
     }
 
     public Beneficio criar(Beneficio beneficio) {
@@ -46,22 +46,22 @@ public class BeneficioService {
 
     public void transferir(Long fromId, Long toId, BigDecimal amount) {
         if (fromId == null || toId == null) {
-            throw new IllegalArgumentException("Os ids de origem e destino são obrigatórios.");
+            throw new BusinessException("Os ids de origem e destino são obrigatórios.");
         }
 
         if (fromId.equals(toId)) {
-            throw new IllegalArgumentException("Origem e destino não podem ser o mesmo benefício.");
+            throw new BusinessException("Origem e destino não podem ser o mesmo benefício.");
         }
 
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("O valor da transferência deve ser maior que zero.");
+            throw new BusinessException("O valor da transferência deve ser maior que zero.");
         }
 
         Beneficio from = buscarPorId(fromId);
         Beneficio to = buscarPorId(toId);
 
         if (from.getValor().compareTo(amount) < 0) {
-            throw new IllegalStateException("Saldo insuficiente para realizar a transferência.");
+            throw new BusinessException("Saldo insuficiente para realizar a transferência.");
         }
 
         from.setValor(from.getValor().subtract(amount));
