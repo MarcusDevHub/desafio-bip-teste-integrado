@@ -6,6 +6,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/beneficios")
+@CrossOrigin(origins = "http://localhost:4200")
+
 public class BeneficioController {
 
     private final BeneficioService service;
