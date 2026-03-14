@@ -74,6 +74,11 @@ export class AppComponent implements OnInit {
     this.erro = '';
     this.mensagemSucesso = '';
 
+    if (this.transferencia.fromId === this.transferencia.toId) {
+      this.erro = 'Origem e destino não podem ser o mesmo benefício.';
+      return;
+    }
+
     this.beneficioService.transferir(this.transferencia).subscribe({
       next: () => {
         this.mensagemSucesso = 'Transferência realizada com sucesso.';
@@ -87,6 +92,7 @@ export class AppComponent implements OnInit {
       error: (err) => {
         this.erro = err?.error?.message || 'Erro ao realizar transferência.';
       }
+
     });
   }
 

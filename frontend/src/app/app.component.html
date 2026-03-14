@@ -47,23 +47,26 @@
 
 
     <form #transferForm="ngForm" (ngSubmit)="transferirValor()" class="formulario">
-      <h2>
-        ID Origem
-      </h2>
-      <input type="number" name="fromId" [(ngModel)]="transferencia.fromId" placeholder="ID de origem" required min="1"
-        #fromId="ngModel" />
+      <select name="fromId" [(ngModel)]="transferencia.fromId" required #fromId="ngModel">
+        <option [ngValue]="0">Selecione o benefício de origem</option>
+        <option *ngFor="let beneficio of beneficios" [ngValue]="beneficio.id">
+          {{ beneficio.nome }} (ID: {{ beneficio.id }}) - Saldo: {{ beneficio.valor }}
+        </option>
+      </select>
 
       <small *ngIf="fromId.invalid && fromId.touched">
-        O ID de origem é obrigatório.
+        O benefício de origem é obrigatório.
       </small>
-      <h2>
-        ID Destino
-      </h2>
-      <input type="number" name="toId" [(ngModel)]="transferencia.toId" placeholder="ID de destino" required min="1"
-        #toId="ngModel" />
+
+      <select name="toId" [(ngModel)]="transferencia.toId" required #toId="ngModel">
+        <option [ngValue]="0">Selecione o benefício de destino</option>
+        <option *ngFor="let beneficio of beneficios" [ngValue]="beneficio.id">
+          {{ beneficio.nome }} (ID: {{ beneficio.id }}) - Saldo: {{ beneficio.valor }}
+        </option>
+      </select>
 
       <small *ngIf="toId.invalid && toId.touched">
-        O ID de destino é obrigatório.
+        O benefício de destino é obrigatório.
       </small>
       <h2>
         Valor da Transferência
