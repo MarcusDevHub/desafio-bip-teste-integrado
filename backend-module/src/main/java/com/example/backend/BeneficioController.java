@@ -38,4 +38,10 @@ public class BeneficioController {
     public void delete(@PathVariable Long id) {
         service.deletar(id);
     }
+
+    @PostMapping("/transfer")
+    public void transfer(@RequestBody TransferRequest request) {
+        service.transferir(request.getFromId(), request.getToId(), request.getAmount());
+    }
+
 }

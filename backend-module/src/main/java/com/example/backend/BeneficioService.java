@@ -2,6 +2,7 @@ package com.example.backend;
 
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -42,4 +43,32 @@ public class BeneficioService {
         Beneficio existente = buscarPorId(id);
         repository.delete(existente);
     }
+
+    public void transferir(Long fromId, Long toId, BigDecimal amount) {
+        if (fromId == null || toId == null) {
+            throw new IllegalArgumentException("Os ids de origem e destino são obrigatórios.");
+        }
+
+        if (fromId.equals(toId)) {
+            throw new IllegalArgumentException("Origem e destino não podem ser o mesmo benefício.");
+        }
+
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("O valor da transferência deve ser maior que zero.");
+        }
+
+        Beneficio from = buscarPorId(fromId);
+        Beneficio to = buscarPorId(toId);
+
+        if (from.getValor().compareTo(amount) < 0) {
+            throw new IllegalStateException("Saldo insuficiente para realizar a transferência.");
+        }
+
+        from.setValor(from.getValor().subtract(amount));
+        to.setValor(to.getValor().add(amount));
+
+        repository.save(from);
+        repository.save(to);
+    }
+
 }
