@@ -8,6 +8,23 @@ h1 {
     margin-bottom: 20px;
 }
 
+.formulario {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+input,
+button {
+    padding: 10px;
+    font-size: 14px;
+}
+
+button {
+    width: fit-content;
+    cursor: pointer;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -23,4 +40,9 @@ td {
 
 th {
     background-color: #f4f4f4;
+}
+
+small {
+    color: red;
+    font-size: 12px;
 }

@@ -14,4 +14,7 @@ export class BeneficioService {
     listar(): Observable<Beneficio[]> {
         return this.http.get<Beneficio[]>(this.apiUrl);
     }
+    criar(beneficio: Partial<Beneficio>): Observable<Beneficio> {
+        return this.http.post<Beneficio>(this.apiUrl, beneficio);
+    }
 }

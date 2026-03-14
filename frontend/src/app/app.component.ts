@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { BeneficioService } from './services/beneficio.service';
 import { Beneficio } from './models/beneficio';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -14,7 +15,13 @@ export class AppComponent implements OnInit {
   beneficios: Beneficio[] = [];
   carregando = false;
   erro = '';
-  title = 'frontend';
+
+  novoBeneficio = {
+    nome: '',
+    descricao: '',
+    valor: 0,
+    ativo: true
+  };
 
   constructor(private beneficioService: BeneficioService) { }
 
@@ -34,6 +41,23 @@ export class AppComponent implements OnInit {
       error: () => {
         this.erro = 'Erro ao carregar benefícios.';
         this.carregando = false;
+      }
+    });
+  }
+
+  criarBeneficio(): void {
+    this.beneficioService.criar(this.novoBeneficio).subscribe({
+      next: () => {
+        this.novoBeneficio = {
+          nome: '',
+          descricao: '',
+          valor: 0,
+          ativo: true
+        };
+        this.carregarBeneficios();
+      },
+      error: () => {
+        this.erro = 'Erro ao criar benefício.';
       }
     });
   }

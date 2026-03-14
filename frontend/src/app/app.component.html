@@ -1,37 +1,66 @@
 <!-- HTML -->
 
 <main class="main">
-  <div class="content">
-    <div class="container">
-      <h1>Benefícios</h1>
+  <div class="container">
+    <h1>Benefícios</h1>
 
-      <p *ngIf="carregando">Carregando benefícios...</p>
-      <p *ngIf="erro">{{ erro }}</p>
+    <form #beneficioForm="ngForm" (ngSubmit)="criarBeneficio()" class="formulario">
+      <input type="text" name="nome" [(ngModel)]="novoBeneficio.nome" placeholder="Nome" required #nome="ngModel" />
 
-      <table *ngIf="beneficios.length > 0">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Descrição</th>
-            <th>Valor</th>
-            <th>Ativo</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let beneficio of beneficios">
-            <td>{{ beneficio.id }}</td>
-            <td>{{ beneficio.nome }}</td>
-            <td>{{ beneficio.descricao }}</td>
-            <td>{{ beneficio.valor }}</td>
-            <td>{{ beneficio.ativo ? 'Sim' : 'Não' }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <small *ngIf="nome.invalid && nome.touched">
+        O nome é obrigatório.
+      </small>
 
-      <p *ngIf="!carregando && beneficios.length === 0 && !erro">
-        Nenhum benefício encontrado.
-      </p>
-    </div>
+      <input type="text" name="descricao" [(ngModel)]="novoBeneficio.descricao" placeholder="Descrição" required
+        #descricao="ngModel" />
+
+      <small *ngIf="descricao.invalid && descricao.touched">
+        A descrição é obrigatória.
+      </small>
+
+      <input type="number" name="valor" [(ngModel)]="novoBeneficio.valor" placeholder="Valor" required min="0"
+        #valor="ngModel" />
+
+      <small *ngIf="valor.invalid && valor.touched">
+        O valor é obrigatório e não pode ser negativo.
+      </small>
+
+      <label>
+        <input type="checkbox" name="ativo" [(ngModel)]="novoBeneficio.ativo" />
+        Ativo
+      </label>
+
+      <button type="submit" [disabled]="beneficioForm.invalid">
+        Criar benefício
+      </button>
+    </form>
+
+    <p *ngIf="carregando">Carregando benefícios...</p>
+    <p *ngIf="erro">{{ erro }}</p>
+
+    <table *ngIf="beneficios.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Descrição</th>
+          <th>Valor</th>
+          <th>Ativo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let beneficio of beneficios">
+          <td>{{ beneficio.id }}</td>
+          <td>{{ beneficio.nome }}</td>
+          <td>{{ beneficio.descricao }}</td>
+          <td>{{ beneficio.valor }}</td>
+          <td>{{ beneficio.ativo ? 'Sim' : 'Não' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p *ngIf="!carregando && beneficios.length === 0 && !erro">
+      Nenhum benefício encontrado.
+    </p>
   </div>
 </main>
