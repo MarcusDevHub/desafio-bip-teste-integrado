@@ -15,6 +15,9 @@ export class AppComponent implements OnInit {
   beneficios: Beneficio[] = [];
   carregando = false;
   erro = '';
+  modoEdicao = false;
+  beneficioEmEdicaoId: number | null = null;
+
 
   novoBeneficio = {
     nome: '',
@@ -30,6 +33,7 @@ export class AppComponent implements OnInit {
   };
 
   mensagemSucesso = '';
+
 
 
   constructor(private beneficioService: BeneficioService) { }
@@ -54,22 +58,48 @@ export class AppComponent implements OnInit {
     });
   }
 
-  criarBeneficio(): void {
-    this.beneficioService.criar(this.novoBeneficio).subscribe({
-      next: () => {
-        this.novoBeneficio = {
-          nome: '',
-          descricao: '',
-          valor: 0,
-          ativo: true
-        };
-        this.carregarBeneficios();
-      },
-      error: () => {
-        this.erro = 'Erro ao criar benefício.';
-      }
-    });
+  resetarFormulario(): void {
+    this.modoEdicao = false;
+    this.beneficioEmEdicaoId = null;
+
+    this.novoBeneficio = {
+      nome: '',
+      descricao: '',
+      valor: 0,
+      ativo: true
+    };
   }
+
+
+  salvarBeneficio(): void {
+    this.erro = '';
+    this.mensagemSucesso = '';
+
+    if (this.modoEdicao && this.beneficioEmEdicaoId !== null) {
+      this.beneficioService.atualizar(this.beneficioEmEdicaoId, this.novoBeneficio).subscribe({
+        next: () => {
+          this.mensagemSucesso = 'Benefício atualizado com sucesso.';
+          this.resetarFormulario();
+          this.carregarBeneficios();
+        },
+        error: (err) => {
+          this.erro = err?.error?.message || 'Erro ao atualizar benefício.';
+        }
+      });
+    } else {
+      this.beneficioService.criar(this.novoBeneficio).subscribe({
+        next: () => {
+          this.mensagemSucesso = 'Benefício criado com sucesso.';
+          this.resetarFormulario();
+          this.carregarBeneficios();
+        },
+        error: (err) => {
+          this.erro = err?.error?.message || 'Erro ao criar benefício.';
+        }
+      });
+    }
+  }
+
   transferirValor(): void {
     this.erro = '';
     this.mensagemSucesso = '';
@@ -116,6 +146,25 @@ export class AppComponent implements OnInit {
       }
     });
   }
+  editarBeneficio(beneficio: Beneficio): void {
+    this.modoEdicao = true;
+    this.beneficioEmEdicaoId = beneficio.id;
+    this.mensagemSucesso = '';
+    this.erro = '';
+
+    this.novoBeneficio = {
+      nome: beneficio.nome,
+      descricao: beneficio.descricao,
+      valor: beneficio.valor,
+      ativo: beneficio.ativo
+    };
+  }
+
+  cancelarEdicao(): void {
+    this.resetarFormulario();
+  }
+
+
 
 
 }

@@ -75,3 +75,23 @@ td button {
 td button:hover {
     opacity: 0.9;
 }
+
+td button {
+    margin-right: 8px;
+    border: none;
+    padding: 8px 12px;
+    color: white;
+    cursor: pointer;
+}
+
+td button:first-child {
+    background-color: #0275d8;
+}
+
+td button:last-child {
+    background-color: #d9534f;
+}
+
+td button:hover {
+    opacity: 0.9;
+}

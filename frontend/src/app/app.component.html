@@ -4,12 +4,16 @@
   <div class="container">
     <h1>Benefícios</h1>
 
-    <h2>Cadastrar benefício</h2>
+    <h2>{{ modoEdicao ? 'Editar benefício' : 'Cadastrar benefício' }}</h2>
     <p class="descricao-secao">
-      Preencha os dados abaixo para criar um novo benefício.
+      {{ modoEdicao
+      ? 'Atualize os dados do benefício selecionado.'
+      : 'Preencha os dados abaixo para criar um novo benefício.' }}
     </p>
 
-    <form #beneficioForm="ngForm" (ngSubmit)="criarBeneficio()" class="formulario">
+
+    <form #beneficioForm="ngForm" (ngSubmit)="salvarBeneficio()" class="formulario">
+
       <input type="text" name="nome" [(ngModel)]="novoBeneficio.nome" placeholder="Nome" required #nome="ngModel" />
 
       <small *ngIf="nome.invalid && nome.touched">
@@ -36,7 +40,10 @@
       </label>
 
       <button type="submit" [disabled]="beneficioForm.invalid">
-        Criar benefício
+        {{ modoEdicao ? 'Salvar alteração' : 'Criar benefício' }}
+      </button>
+      <button type="button" *ngIf="modoEdicao" (click)="cancelarEdicao()">
+        Cancelar
       </button>
     </form>
 
@@ -108,6 +115,10 @@
           <td>{{ beneficio.valor }}</td>
           <td>{{ beneficio.ativo ? 'Sim' : 'Não' }}</td>
           <td>
+            <button type="button" (click)="editarBeneficio(beneficio)">
+              Editar
+            </button>
+
             <button type="button" (click)="deletarBeneficio(beneficio.id)">
               Excluir
             </button>

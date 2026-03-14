@@ -24,6 +24,10 @@ export class BeneficioService {
     deletar(id: number) {
         return this.http.delete<void>(`${this.apiUrl}/${id}`);
     }
+    atualizar(id: number, beneficio: Partial<Beneficio>) {
+        return this.http.put<Beneficio>(`${this.apiUrl}/${id}`, beneficio);
+    }
+
 
 
 }
