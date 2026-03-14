@@ -4,6 +4,11 @@
   <div class="container">
     <h1>Benefícios</h1>
 
+    <h2>Cadastrar benefício</h2>
+    <p class="descricao-secao">
+      Preencha os dados abaixo para criar um novo benefício.
+    </p>
+
     <form #beneficioForm="ngForm" (ngSubmit)="criarBeneficio()" class="formulario">
       <input type="text" name="nome" [(ngModel)]="novoBeneficio.nome" placeholder="Nome" required #nome="ngModel" />
 
@@ -34,6 +39,49 @@
         Criar benefício
       </button>
     </form>
+
+    <h2>Transferir valor</h2>
+    <p class="descricao-secao">
+      Informe o ID do benefício de origem, o ID do destino e o valor da transferência.
+    </p>
+
+
+    <form #transferForm="ngForm" (ngSubmit)="transferirValor()" class="formulario">
+      <h2>
+        ID Origem
+      </h2>
+      <input type="number" name="fromId" [(ngModel)]="transferencia.fromId" placeholder="ID de origem" required min="1"
+        #fromId="ngModel" />
+
+      <small *ngIf="fromId.invalid && fromId.touched">
+        O ID de origem é obrigatório.
+      </small>
+      <h2>
+        ID Destino
+      </h2>
+      <input type="number" name="toId" [(ngModel)]="transferencia.toId" placeholder="ID de destino" required min="1"
+        #toId="ngModel" />
+
+      <small *ngIf="toId.invalid && toId.touched">
+        O ID de destino é obrigatório.
+      </small>
+      <h2>
+        Valor da Transferência
+      </h2>
+      <input type="number" name="amount" [(ngModel)]="transferencia.amount" placeholder="Valor da transferência"
+        required min="0.01" #amount="ngModel" />
+
+      <small *ngIf="amount.invalid && amount.touched">
+        O valor da transferência deve ser maior que zero.
+      </small>
+
+      <button type="submit" [disabled]="transferForm.invalid">
+        Transferir
+      </button>
+    </form>
+
+    <p *ngIf="mensagemSucesso">{{ mensagemSucesso }}</p>
+
 
     <p *ngIf="carregando">Carregando benefícios...</p>
     <p *ngIf="erro">{{ erro }}</p>

@@ -23,6 +23,15 @@ export class AppComponent implements OnInit {
     ativo: true
   };
 
+  transferencia = {
+    fromId: 0,
+    toId: 0,
+    amount: 0
+  };
+
+  mensagemSucesso = '';
+
+
   constructor(private beneficioService: BeneficioService) { }
 
   ngOnInit(): void {
@@ -61,4 +70,24 @@ export class AppComponent implements OnInit {
       }
     });
   }
+  transferirValor(): void {
+    this.erro = '';
+    this.mensagemSucesso = '';
+
+    this.beneficioService.transferir(this.transferencia).subscribe({
+      next: () => {
+        this.mensagemSucesso = 'Transferência realizada com sucesso.';
+        this.transferencia = {
+          fromId: 0,
+          toId: 0,
+          amount: 0
+        };
+        this.carregarBeneficios();
+      },
+      error: (err) => {
+        this.erro = err?.error?.message || 'Erro ao realizar transferência.';
+      }
+    });
+  }
+
 }
