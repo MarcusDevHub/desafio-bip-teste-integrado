@@ -1,43 +1,157 @@
 # 🏗️ Desafio Fullstack Integrado
-🚨 Instrução Importante (LEIA ANTES DE COMEÇAR)
-❌ NÃO faça fork deste repositório.
+# Sistema de Gerenciamento de Benefícios
 
-Este repositório é fornecido como modelo/base. Para realizar o desafio, você deve:
-✅ Opção correta (obrigatória)
-  Clique em “Use this template” (se este repositório estiver marcado como Template)
-OU
-  Clone este repositório e crie um NOVO repositório público em sua conta GitHub.
-📌 O resultado deve ser um repositório próprio, independente deste.
+Aplicação full-stack para gerenciamento de benefícios, permitindo cadastrar, listar, editar, excluir e transferir valores entre benefícios.
 
-## 🎯 Objetivo
-Criar solução completa em camadas (DB, EJB, Backend, Frontend), corrigindo bug em EJB e entregando aplicação funcional.
+## Tecnologias utilizadas
 
-## 📦 Estrutura
-- db/: scripts schema e seed
-- ejb-module/: serviço EJB com bug a ser corrigido
-- backend-module/: backend Spring Boot
-- frontend/: app Angular
-- docs/: instruções e critérios
-- .github/workflows/: CI
+### Backend
+- Java 17
+- Spring Boot
+- Spring Web
+- Spring Data JPA
+- PostgreSQL
+- Maven
+- JUnit 5
+- MockMvc
+- Springdoc OpenAPI / Swagger
 
-## ✅ Tarefas do candidato
-1. Executar db/schema.sql e db/seed.sql
-2. Corrigir bug no BeneficioEjbService
-3. Implementar backend CRUD + integração com EJB
-4. Desenvolver frontend Angular consumindo backend
-5. Implementar testes
-6. Documentar (Swagger, README)
-7. Submeter via fork + PR
+### Frontend
+- Angular
+- TypeScript
+- HTML
+- CSS
 
-## 🐞 Bug no EJB
-- Transferência não verifica saldo, não usa locking, pode gerar inconsistência
-- Espera-se correção com validações, rollback, locking/optimistic locking
+## Funcionalidades
 
-## 📊 Critérios de avaliação
-- Arquitetura em camadas (20%)
-- Correção EJB (20%)
-- CRUD + Transferência (15%)
-- Qualidade de código (10%)
-- Testes (15%)
-- Documentação (10%)
-- Frontend (10%)
+- Listagem de benefícios
+- Busca de benefício por ID
+- Cadastro de benefício
+- Edição de benefício
+- Exclusão de benefício
+- Transferência de valor entre benefícios
+- Documentação da API com Swagger
+- Testes automatizados no backend
+
+## Pré-requisitos
+Antes de executar o projeto, é necessário ter instalado:
+
+Java 17 ou superior
+
+Maven
+
+Node.js
+
+Angular CLI
+
+PostgreSQL
+
+## Configuração do banco de dados
+
+Crie um banco PostgreSQL e configure as credenciais no backend.
+
+O projeto possui script de schema.sql e seed.sql, execute-os no banco antes de iniciar a aplicação.
+
+pode utilizar do Database Client do vscode ou do pgAdmin para executar os scripts SQL.
+
+```bash
+
+## Como executar o backend
+Acesse a pasta do backend:
+
+```bash
+cd backend-module
+```
+Execute a aplicação:
+
+```bash
+mvn spring-boot:run
+```
+O backend estará disponível em:
+
+```text
+http://localhost:8080
+```
+
+## Como executar o frontend
+Acesse a pasta do frontend:
+
+```bash
+cd frontend
+```
+Instale as dependências:
+
+```bash
+npm install
+```
+Execute o projeto:
+
+```bash
+ng serve
+```
+O frontend estará disponível em:
+
+```text
+http://localhost:4200
+```
+## Testes do backend
+Para executar os testes automatizados do backend:
+
+```bash
+cd backend-module
+mvn test
+```
+## Os testes cobrem os principais endpoints do controller de benefícios:
+
+- listagem
+
+- busca por ID
+
+- criação
+
+- atualização
+
+- exclusão
+
+- transferência
+
+## Documentação da API
+Com o backend em execução, acesse a documentação Swagger em:
+
+```text
+http://localhost:8080/swagger-ui.html
+```
+A especificação OpenAPI também pode ser acessada em:
+
+```text
+http://localhost:8080/v3/api-docs
+```
+## Endpoints principais
+- GET /api/v1/beneficios
+
+- GET /api/v1/beneficios/{id}
+
+- POST /api/v1/beneficios
+
+- PUT /api/v1/beneficios/{id}
+
+- DELETE /api/v1/beneficios/{id}
+
+- POST /api/v1/beneficios/transfer
+
+## Observações
+O frontend consome a API do backend em http://localhost:8080.
+
+O backend está configurado com CORS para permitir acesso do Angular em http://localhost:4200.
+
+A documentação Swagger foi adicionada com Springdoc.
+
+Os testes do backend foram implementados com MockMvc.
+
+## Autor
+
+Projeto desenvolvido por Marcus Thulio como parte de desafio tecnico de fullstack integrado.
+
+## Feedback
+
+Se você tiver qualquer feedback, me envie um email para marcusthuliok9@gmail.com
